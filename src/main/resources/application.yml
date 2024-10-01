@@ -1,0 +1,15 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: product-catalog-system
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/productcatalog
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
