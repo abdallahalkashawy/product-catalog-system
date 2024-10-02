@@ -1,9 +1,8 @@
 package org.backend.productcatalogsystem.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class SubCategory {
@@ -12,5 +11,12 @@ public class SubCategory {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToMany(mappedBy = "subCategory")
+    private Set<Product> products;
 
 }
