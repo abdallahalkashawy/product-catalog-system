@@ -1,8 +1,16 @@
 package org.backend.productcatalogsystem.Models;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Data
+@BatchSize(size = 20)
+@Table(indexes = {
+        @Index(name = "product_name_index", columnList = "name")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

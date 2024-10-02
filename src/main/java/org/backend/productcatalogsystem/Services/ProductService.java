@@ -1,0 +1,69 @@
+package org.backend.productcatalogsystem.Services;
+
+
+import lombok.AllArgsConstructor;
+import org.backend.productcatalogsystem.Models.Product;
+import org.backend.productcatalogsystem.Repos.ProductRepository;
+import org.backend.productcatalogsystem.dtos.ProductDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class ProductService {
+    private final ProductRepository productRepository;
+
+
+    public ResponseEntity<?> createProduct(Product product) {
+        Product newProduct = productRepository.save(product);
+        return ResponseEntity.ok(newProduct);
+    }
+
+
+    public ResponseEntity<?> getProductById(Long id) {
+        if(id == null || id <= 0) {
+            return ResponseEntity.badRequest().body("Invalid product id");
+        }
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) {
+            return ResponseEntity.badRequest().body("Product not found");
+        }
+        return ResponseEntity.ok(product);
+    }
+
+   public ResponseEntity<?> getProductByName(String name) {
+       long startTime = System.nanoTime();
+
+       // Execute the method
+       Product product = productRepository.findByName(name);
+
+       // End timing
+       long endTime = System.nanoTime();
+       long executionTime = endTime - startTime;
+
+       if (product == null) {
+           return ResponseEntity.badRequest().body("Product not found. Execution time: " + executionTime + " ns");
+       }
+
+       // Return the product and execution time
+       return ResponseEntity.ok(product + ". Execution time: " + executionTime + " ns");
+    }
+    public Set<ProductDTO> getAllProducts() {
+
+        List<Product> products = productRepository.findAll();
+        return products.stream().map(product -> ProductDTO.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .subcategory_name(product.getSubCategory().getName())
+                .category_name(product.getSubCategory().getCategory().getName())
+                .build()).collect(Collectors.toSet());
+    }
+
+
+
+}

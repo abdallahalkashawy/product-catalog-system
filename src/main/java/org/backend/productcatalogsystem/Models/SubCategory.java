@@ -1,10 +1,12 @@
 package org.backend.productcatalogsystem.Models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Set;
 
 @Entity
+@Data
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +18,5 @@ public class SubCategory {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "subCategory")
-    private Set<Product> products;
 
 }
