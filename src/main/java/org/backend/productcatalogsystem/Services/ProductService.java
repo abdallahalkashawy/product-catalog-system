@@ -32,25 +32,33 @@ public class ProductService {
         if (product == null) {
             return ResponseEntity.badRequest().body("Product not found");
         }
-        return ResponseEntity.ok(product);
+        return ResponseEntity.ok(
+                ProductDTO.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .subcategory_name(product.getSubCategory().getName())
+                        .category_name(product.getSubCategory().getCategory().getName())
+                        .build());
     }
 
    public ResponseEntity<?> getProductByName(String name) {
-       long startTime = System.nanoTime();
 
-       // Execute the method
        Product product = productRepository.findByName(name);
 
-       // End timing
-       long endTime = System.nanoTime();
-       long executionTime = endTime - startTime;
-
        if (product == null) {
-           return ResponseEntity.badRequest().body("Product not found. Execution time: " + executionTime + " ns");
+           return ResponseEntity.badRequest().body("Product not found.");
        }
 
        // Return the product and execution time
-       return ResponseEntity.ok(product + ". Execution time: " + executionTime + " ns");
+       return ResponseEntity.ok(
+               ProductDTO.builder()
+                       .id(product.getId())
+                       .name(product.getName())
+                       .description(product.getDescription())
+                       .subcategory_name(product.getSubCategory().getName())
+                       .category_name(product.getSubCategory().getCategory().getName())
+                       .build());
     }
     public Set<ProductDTO> getAllProducts() {
 
