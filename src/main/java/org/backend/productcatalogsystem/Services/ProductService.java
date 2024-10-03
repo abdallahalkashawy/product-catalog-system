@@ -42,8 +42,7 @@ public class ProductService {
                         .build());
     }
 
-   public ResponseEntity<?> getProductByName(String name) {
-
+    public ResponseEntity<?> getProductByName(String name) {
        Product product = productRepository.findByName(name);
 
        if (product == null) {

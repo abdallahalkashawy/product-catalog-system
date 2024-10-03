@@ -3,7 +3,6 @@ package org.backend.productcatalogsystem.Models;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Data
@@ -18,7 +17,6 @@ public class Product {
 
     private String name;
 
-    @Lob
     private String description;
 
     @ManyToOne
