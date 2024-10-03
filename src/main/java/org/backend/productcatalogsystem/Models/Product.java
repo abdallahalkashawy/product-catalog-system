@@ -17,6 +17,7 @@ public class Product {
 
     private String name;
 
+    @Lob
     private String description;
 
     @ManyToOne
